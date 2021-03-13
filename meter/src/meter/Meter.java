@@ -14,17 +14,18 @@ public class Meter {
 		String file = "/home/fernando/Git/java/meter/ejemplo.csv";
 		String splitBy = ",";
 		int linesHeader = 1;
-		int dataHead = 3;
-		int dataTail = 2;
+		int dataHead = 4;
+		int dataTail = 3;
 		Parse parse = new Parse();
 		Count count = new Count();
 		
 		try {
 			count.getCountLines(file);
-			//parse.getHeaders(file, linesHeader);
-			//parse.getData(file, linesHeader);
+			count.getCountColumns(file, splitBy, linesHeader);
+			parse.getHeaders(file, linesHeader);
+			parse.getData(file, linesHeader);
 			//parse.getDataHead(file, linesHeader, dataHead);
-			parse.getDataTail(file, linesHeader, dataTail);
+			//parse.getDataTail(file, linesHeader, dataTail);
 		} catch (FileNotFoundException fnfe){
 			fnfe.printStackTrace();
 		}

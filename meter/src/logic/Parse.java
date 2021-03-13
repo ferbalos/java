@@ -49,7 +49,7 @@ public class Parse {
 
 		}
 		if (dataHead > (total - linesHeader)) {
-			System.out.println("<---EOF--->");
+			System.out.println("<---End of line records--->");
 		}
 		line.close();
 	}// eogetDataHead
@@ -58,38 +58,28 @@ public class Parse {
 		Count count = new Count();
 		int total = count.countLines(file);
 		line = new ReadLine().readLine(file);
-		// moves lineReader to EOF
-		//line.setLineNumber(total);
-
 		int lineCount = 0;
-
 		String strLine = "";
 
 		System.out.println("\n<---RECORDS--->");
-		if(dataTail < total) {
-			while(lineCount < dataTail) {
+		if (dataTail <= total-linesHeader) {
+			for (int i = 0; i < total; i++) {
 				lineCount++;
-				
-				// aquí está el fallo
-				line.mark(total-lineCount);
-				line.reset();
-				line.setLineNumber(total-lineCount);
-				
-				strLine = line.readLine();
-				System.out.println(total);
-				System.out.println("L" + line.getLineNumber() + ": " + strLine);
+				if (dataTail >= total - i) {
+					strLine = line.readLine();
+					System.out.println("L" + line.getLineNumber() + ": " + strLine);
+				} else {
+					strLine = line.readLine();
+				}
 			}
-		}
 
-					
-
-
-
-
-		if (dataTail > (total - linesHeader)) {
-			System.out.println("<---Too much records!--->");
+		} else {
+			System.out.println("<---There are only "+(total-linesHeader)+" line records!--->");
+			System.out.println("(The header spans "+linesHeader+" line(s))");
 		}
 		line.close();
 	}// eogetDataTail
+	
+	//Método para que recorra el fichero, divida la línea en campos y cuente los caracteres de cada campo.
 
 }// eoclass
